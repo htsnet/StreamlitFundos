@@ -40,6 +40,6 @@ if botSummary:
         with st.spinner('Tome um café enquanto aguarda o resultado...'):
             listaTotal = ajustaEntrada(text)
             listaUnica = list(dict.fromkeys(listaTotal))
-            st.info('Foram identificados ', len(listaUnica), ' fundos distintos.'
+            st.info('Foram identificados ', len(listaUnica), ' fundos distintos.')
         
                 
