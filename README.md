@@ -10,5 +10,5 @@ python -m venv Ambiente_Virtual
 cd Ambiente_Virtual\Scripts
 activate
 cd ../..
-pip install <packages>
-streamlit run app.py
+pip install <packages> (ver a lista em requirements.txt)
+streamlit run app.py  
