@@ -9,7 +9,7 @@ with st.sidebar:
     st.write('3 - Será apresentado um quadro com um resumo simples de cada fundo e um link para a fonte.')
         
     st.header('Sobre')
-    st.write('Os detalhes e o código fonte sobre este projeto podem ser encontrados em ')
+    st.write('Os detalhes e o código fonte sobre este projeto podem ser encontrados em https://github.com/htsnet/StreamlitFundos')
     st.write('As informações são obtidas através do site https://www.fundsexplorer.com.br/')
     
 # título
@@ -40,6 +40,6 @@ if botSummary:
         with st.spinner('Tome um café enquanto aguarda o resultado...'):
             listaTotal = ajustaEntrada(text)
             listaUnica = list(dict.fromkeys(listaTotal))
-            st.info('Foram identificados ', len(listaUnica), ' fundos distintos.')
+            st.info('Foram identificados ' + len(listaUnica) + ' fundos distintos.')
         
                 
