@@ -88,7 +88,7 @@ if botSummary:
                     percent = 1 
                 progress_text = i
                 # atualiza a barra de progresso
-                # st.write(percent)
+                # st.write(percent)   
                 my_bar.progress(percent, text=progress_text)
                 
                 # Loop através de cada URL e buscar os campos desejados
