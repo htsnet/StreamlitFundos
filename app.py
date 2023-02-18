@@ -8,16 +8,17 @@ from prettytable import PrettyTable
 
 with st.sidebar:
     st.header('Guia de uso')
-    st.write('1 - Cole na caixa ao lado a lista dos identificadores de seus fundos (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter.')
+    st.write('1 - Cole na caixa ao lado a lista dos identificadores de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter.')
     st.write('2 - Aperte o botão para executar a pesquisa e aguarde.')
     st.write('3 - Será apresentado um quadro com um resumo simples de cada fundo e um link para a fonte.')
         
     st.header('Sobre')
+    st.write('‼️ ⚠️ Projeto em elaboração! Confira as informações para certificação dos dados.')
     st.write('Os detalhes e o código fonte sobre este projeto podem ser encontrados em https://github.com/htsnet/StreamlitFundos')
     st.write('As informações são obtidas através do site https://www.fundsexplorer.com.br/')
     
 # título
-Title = f'Buscador de Informações sobre Fundos no Mercado Financeiro'
+Title = f'Buscador de Informações sobre Fundos Imobiliários no Mercado Financeiro'
 st.title(Title)
 
 text_base = ''
@@ -45,9 +46,9 @@ def ajustaEntrada(text):
 
 def pegaResultado(valor):
     if valor:
-        return valor
+        return valor.replace('\n', '')
     else:
-        return ''
+        return None
       
 
 # st.write('Busca das informações')
@@ -61,7 +62,13 @@ if botSummary:
             # st.write(str(listaUnica))
             
             # Define a tabela com as colunas
-            table = ['Título', 'Último rendim.', 'Dividend Yield', 'Rentab. no mês', 'P/VP']
+            table = PrettyTable()
+            table.field_names = ['Título', 'Último rendim.', 'Dividend Yield', 'Rentab. no mês', 'P/VP', 'Link']
+            table.align['Título'] = "r"
+            table.align['Último rendim.'] = "r"
+            table.align['Dividend Yield'] = "r"
+            table.align['Rentab. no mês'] = "r"
+            table.align['P/VP'] = "r"
             
             for i in listaUnica:
                 # Loop através de cada URL e buscar os campos desejados
@@ -70,16 +77,17 @@ if botSummary:
 
                 try:
                     # Solicitação HTTP para obter o conteúdo HTML da página
-                    response = requests.get(url, timeout=20)
+                    response = requests.get(url, timeout=30)
                     
                     # Usando o Beautiful Soup para analisar o HTML e encontrar os campos
                     soup = BeautifulSoup(response.content, 'html.parser')
                     # print(soup.prettify())
                     
                     # Aguarda até que o elemento 'title' seja encontrado
-                    title_element = None
+                    element_found = None
+                    element_not_found = None
                     start_time = time.time()
-                    while not title_element:
+                    while not (element_found or element_not_found):
                         element_found = soup.find_all('span', {'class': 'indicator-value'})
                         element_not_found = soup.find('img', {'id': '#not-found>span'})
 
@@ -100,8 +108,13 @@ if botSummary:
                         # st.write(f'Dividend Yield: {divs[1].get_text()}')
                         # st.write(f'Rentabilidade no mês: {divs[4].get_text()}')
                         # st.write(f'P/VP: {divs[5].get_text()}')
-                        table.append([i, divs[0].get_text(), divs[1].get_text(), divs[4].get_text(), divs[5].get_text()])
-                        # print(table)
+                        table.add_row([i, 
+                                       pegaResultado(divs[1].get_text()), 
+                                       pegaResultado(divs[2].get_text()), 
+                                       pegaResultado(divs[5].get_text()), 
+                                       pegaResultado(divs[6].get_text()),
+                                       url
+                                       ])
                     else:
                         st.write(f'Informações sobre o título {i} não foram encontradas.')    
                     
@@ -111,5 +124,4 @@ if botSummary:
                     st.write(f'Erro ao extrair os campos da página {i}: {e}')
                     
                 sleep(5)
-                
-            st.dataframe(table)
+            st.write(table)
