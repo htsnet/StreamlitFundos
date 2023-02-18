@@ -2,6 +2,8 @@ Projeto: Um buscador de informações básicas sobre fundos no mercado financeir
 Autor: Hamilton Tenório da Silva
 Date: 17/02/2023
 
+![Alt text](modelo_site.jpg)
+
 Veja es projeto em funcionamento em https://htsnet-streamlitfundos-app-ddtyfo.streamlit.app/
 
 ------ Instructions ------

@@ -8,7 +8,7 @@ import html
 
 with st.sidebar:
     st.header('Guia de uso')
-    st.write('1 - Cole na caixa ao lado a lista dos identificadores (ticker) de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter.')
+    st.write('1 - Cole na caixa ao lado a lista dos identificadores (ticker) de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter. Códigos duplicados serão automaticamente removidos.')
     st.write('2 - Aperte o botão para executar a pesquisa e aguarde.')
     st.write('3 - Será apresentado um quadro com um resumo simples de cada fundo e um link para a fonte.')
         
@@ -53,7 +53,7 @@ def pegaResultado(valor):
       
 progress_text = "Iniciando..."
 qtde_ok = 0
-percent = 0
+percent = 0.0
 
 # st.write('Busca das informações')
 botSummary = st.button("Executar a busca das informações")
@@ -69,16 +69,28 @@ if botSummary:
             
             # Define a tabela com as colunas
             table = PrettyTable()
-            table.field_names = ['Título', 'Último rendim.', 'Dividend Yield', 'Rentab. no mês', 'P/VP']
+            table.field_names = ['Título', 'Último rendimento', 'Dividend Yield', 'Rentabilidade no mês', 'P/VP']
             table.align['Ticker'] = "r"
-            table.align['Último rendim.'] = "r"
+            table.align['Último rendimento'] = "r"
             table.align['Dividend Yield'] = "r"
-            table.align['Rentab. no mês'] = "r"
+            table.align['Rentababilidade no mês'] = "r"
             table.align['P/VP'] = "r"
+            # table.align['Variação 12 meses'] = "r"
+            
+            text="Execução em andamento..."
+            my_bar = st.progress(0, text=progress_text)
+            qtde_total = 0
             
             for i in listaUnica:
-                percent = totalCodigos/100 * qtde_ok
+                qtde_total += 1
+                percent = (1/totalCodigos)*qtde_total # calcula o % com base no total de códigos
+                if percent > 1:
+                    percent = 1 
                 progress_text = i
+                # atualiza a barra de progresso
+                # st.write(percent)
+                my_bar.progress(percent, text=progress_text)
+                
                 # Loop através de cada URL e buscar os campos desejados
                 url = 'https://www.fundsexplorer.com.br/funds/' + i
                 # st.write(url)
@@ -109,6 +121,7 @@ if botSummary:
                         # Extrai o campo da página
                         if element_found:
                             divs = soup.find_all('span', {'class': 'indicator-value'})
+                            # variacao = soup.find_all('span', {'class': 'secondary-value'})
                             # st.write(divs)
                             # st.write(divs[1].get_text())
                             # # Imprima os campos da página atual
@@ -117,11 +130,12 @@ if botSummary:
                             # st.write(f'Dividend Yield: {divs[1].get_text()}')
                             # st.write(f'Rentabilidade no mês: {divs[4].get_text()}')
                             # st.write(f'P/VP: {divs[5].get_text()}')
-                            table.add_row(['<a href={\"' + url + '\"}>' + i + '</a>', # código e link 
+                            table.add_row(['<a target="_blank" href="' + url + '"}>' + i + '</a>', # código e link 
                                         pegaResultado(divs[1].get_text()),  # último rendimento
                                         pegaResultado(divs[2].get_text()),  # dividend yield
                                         pegaResultado(divs[5].get_text()),  # rentabilidade no mês
                                         pegaResultado(divs[6].get_text())  # p/vp
+                                        # pegaResultado(variacao[2].get_text()) # variação 12 meses
                                         ])
                             qtde_ok += 1
                         else:
@@ -133,8 +147,8 @@ if botSummary:
                 except Exception as e:
                     st.write(f'Erro ao extrair os campos da página {i}: {e}')
             
-            
-            # my_bar = st.progress(percent, text=progress_text)
+                
+            my_bar.progress(100, text="Finalizado")
             if qtde_ok > 0:
                 text = table.get_html_string(format=True)
                 text = html.unescape(text)
