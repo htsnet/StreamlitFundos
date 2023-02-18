@@ -23,9 +23,7 @@ st.title(Title)
 st.subheader('Uma forma de se avaliar rapidamente alguns parâmetros básicos de fundos imobiliários')
 
 text_base = 'VINO11, HSML11, '
-
-text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, max_chars=1000, height=150, key='text_area_field')
-
+text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, max_chars=1000, height=100)
 
 def check_text(text):
     if text:
