@@ -27,6 +27,7 @@ text_base = 'VINO11, HSML11, '
 # se tem texto anterior 
 if 'texto_anterior' in st.session_state:
     text_base = ''
+    #verifica
     for i in st.session_state.texto_anterior:
         text_base = text_base + " " + i
 text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, max_chars=1000, height=100)
