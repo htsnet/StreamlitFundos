@@ -11,6 +11,7 @@ with st.sidebar:
     st.write('1 - Cole na caixa ao lado a lista dos identificadores (ticker) de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter. Códigos duplicados serão automaticamente removidos.')
     st.write('2 - Aperte o botão para executar a pesquisa e aguarde.')
     st.write('3 - Será apresentado um quadro com um resumo simples de cada fundo e um link para a fonte.')
+    st.write('4 - Para facilitar uma nova consulta dos mesmos fundos, ao retornar ao site o texto já estará preenchido com sua última informação. Você pode manter os códigos ou modificar à vontade.')
         
     st.header('Sobre')
     st.write('‼️ ⚠️ Projeto em elaboração! Confira as informações para certificação dos dados.')
@@ -23,6 +24,11 @@ st.title(Title)
 st.subheader('Uma forma de se avaliar rapidamente alguns parâmetros básicos de fundos imobiliários')
 
 text_base = 'VINO11, HSML11, '
+# se tem texto anterior 
+if 'texto_anterior' in st.session_state:
+    text_base = ''
+    for i in st.session_state.texto_anterior:
+        text_base = text_base + " " + i
 text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, max_chars=1000, height=100)
 
 def check_text(text):
@@ -41,6 +47,8 @@ def ajustaEntrada(text):
         if i:
              final.append(i.upper())  
     final.sort()
+    # guarda conteúdo para próxima execução
+    st.session_state.texto_anterior = final
     return final
 
 def pegaResultado(valor):
