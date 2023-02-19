@@ -14,3 +14,5 @@ activate
 cd ../..
 pip install <packages> (ver a lista em requirements.txt)
 streamlit run app.py  
+
+  ---------------------
