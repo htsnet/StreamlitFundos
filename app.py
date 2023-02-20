@@ -32,6 +32,7 @@ def main():
             
         st.header('Sobre')
         st.write('‼️ ⚠️ Projeto em elaboração! Confira as informações para certificação dos dados.')
+        st.write('Nenhuma informação é armazenada no servidor, tanto com relação a identificação do usuário quanto aos fundos consultados.')
         st.write('Os detalhes e o código fonte sobre este projeto podem ser encontrados em https://github.com/htsnet/StreamlitFundos')
         st.write('As informações são obtidas através do site https://www.fundsexplorer.com.br/')
         
