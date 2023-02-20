@@ -64,7 +64,7 @@ def main():
         for i in auxiliar:
             if i:
                 # só trata códigos com 6 dígitos
-                if i.length() == 6:
+                if i.len() == 6:
                     final.append(i.upper())  
         final.sort()
         # guarda conteúdo para próxima execução
