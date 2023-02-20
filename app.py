@@ -8,7 +8,8 @@ import html
 
 # ver emojis em https://emojipedia.org/coin/
 
-st.set_page_config(page_title='Informações sobre Fundos Imobiliários', page_icon=':moneybag', layout='centered', )
+st.set_page_config(page_title='Informações sobre Fundos Imobiliários', 
+                   page_icon=':moneybag', layout='centered', initial_sidebar_state='expanded' )
 
 #para esconder o menu do próprio streamlit 
 hide_streamlit_style = """
@@ -77,14 +78,19 @@ def main():
     qtde_ok = 0
     percent = 0.0
 
-    # container = st.container()
-    # TODO fazer funcionar este container 
-    # with container:
-    text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, key='fieldText', max_chars=1000, height=100)
-    botSummary = st.button("Executar a busca das informações")    
+    containerSuperior = st.expander('Lista de Tickers', expanded=True)
+    with containerSuperior:
+        # text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", 
+        #                     value=text_base, key='fieldText', max_chars=1000, height=100)
+        # botSummary = st.button("Executar a busca das informações")   
+        
+        #agrupando em um formulário para assumir o texto mesmo sem ENTER
+        with st.form('Meu formulário'):
+            text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", 
+                            value=text_base, key='fieldText', max_chars=1000, height=100)
+            botSummary = st.form_submit_button("Executar a busca das informações")   
 
     if botSummary:
-        ## TODO forçar o enter no text_area para assumir qq informação adicional
         if check_text(text):
             with st.spinner('Tome um café enquanto aguarda o resultado... 😉'):
                 
@@ -100,7 +106,7 @@ def main():
                 table.align['Ticker'] = "r"
                 table.align['Último rendimento'] = "r"
                 table.align['Dividend Yield'] = "r"
-                table.align['Rentababilidade no mês'] = "r"
+                table.align['Rentabilidade no mês'] = "r"
                 table.align['P/VP'] = "r"
                 # table.align['Variação 12 meses'] = "r"
                 
@@ -108,8 +114,8 @@ def main():
                 my_bar = st.progress(0, text=progress_text)
                 qtde_total = 0
                 
-                #remove alguns elementos da tela
-                # TODO                        container.empty()
+                #fecha container de alguns elementos da tela
+                st.session_state['is_expanded'] = False
                 
                 for i in listaUnica:
                     qtde_total += 1
@@ -184,15 +190,16 @@ def main():
                     text = html.unescape(text)
                     st.markdown(text, unsafe_allow_html=True)
                     st.success('Processamento concluído!')
+                    st.balloons()
                 else:
                     st.write('😒 Nenhuma informação foi obtida...')
 
                 # remove da tela a barra de progresso
                 my_bar.empty()
                 # coloca botão para possibilitar recarregar a página
-                botRestart = st.button("Recarregar para nova pesquisa")
-                if botRestart:
-                    st.experimental_rerun()
+                # botRestart = st.button("Recarregar para nova pesquisa")
+                # if botRestart:
+                #     st.experimental_rerun()
                     
 if __name__ == '__main__':
 	main()                     
