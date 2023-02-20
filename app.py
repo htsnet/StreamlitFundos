@@ -14,10 +14,12 @@ st.set_page_config(page_title='Informações sobre Fundos Imobiliários', page_i
 hide_streamlit_style = """
 <style>
 #MainMenu {visibility: hidden;}
-footer.css-1vilimf.egzxvld1 {visibility: hidden;}
+footer {visibility: hidden;}
 #buscador-de-informa-es-sobre-fundos-imobili-rios-no-mercado-financeiro {padding: 0rem 0px 1rem !important;}
 </style>
 """
+# passa javascript e estilos
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 def main():
     with st.sidebar:
