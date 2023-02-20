@@ -63,7 +63,9 @@ def main():
         final = []
         for i in auxiliar:
             if i:
-                final.append(i.upper())  
+                # só trata códigos com 6 dígitos
+                if i.length() == 6:
+                    final.append(i.upper())  
         final.sort()
         # guarda conteúdo para próxima execução
         st.session_state.texto_anterior = final
