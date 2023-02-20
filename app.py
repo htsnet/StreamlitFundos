@@ -196,6 +196,7 @@ def main():
 
                 # remove da tela a barra de progresso
                 my_bar.empty()
+                
                 # coloca botão para possibilitar recarregar a página
                 # botRestart = st.button("Recarregar para nova pesquisa")
                 # if botRestart:
