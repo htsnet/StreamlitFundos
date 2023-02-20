@@ -68,7 +68,7 @@ def main():
                     final.append(i.upper())  
         final.sort()
         # guarda conteúdo para próxima execução
-        st.session_state.texto_anterior = final
+        st.session_state['texto_anterior'] = final
         return final
 
     def pegaResultado(valor):

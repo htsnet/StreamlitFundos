@@ -4,6 +4,7 @@ Date: 17/02/2023
 
 ![Alt text](modelo_site.jpg)
 
+![Alt text](Screenshot_resultado.png)
 
 Veja es projeto em funcionamento em https://htsnet-streamlitfundos-app-ddtyfo.streamlit.app/
 
