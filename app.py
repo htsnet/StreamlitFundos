@@ -28,7 +28,7 @@ def main():
         st.write('1 - Cole na caixa ao lado a lista dos identificadores (ticker) de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter. Códigos duplicados serão automaticamente removidos.')
         st.write('2 - Aperte o botão para executar a pesquisa e aguarde.')
         st.write('3 - Será apresentado um quadro com um resumo simples de cada fundo e um link para a fonte.')
-        st.write('4 - Para facilitar uma nova consulta dos mesmos fundos, ao retornar ao site o texto já estará preenchido com sua última informação. Você pode manter os códigos ou modificar à vontade.')
+        # st.write('4 - Para facilitar uma nova consulta dos mesmos fundos, ao retornar ao site o texto já estará preenchido com sua última informação. Você pode manter os códigos ou modificar à vontade.')
             
         st.header('Sobre')
         st.write('‼️ ⚠️ Projeto em elaboração! Confira as informações para certificação dos dados.')
@@ -45,7 +45,7 @@ def main():
     # se tem texto anterior 
     if 'texto_anterior' in st.session_state:
         text_base = ''
-        #verifica
+        # st.write(st.session_state.texto_anterior)
         for i in st.session_state.texto_anterior:
             text_base = text_base + " " + i
 
@@ -116,9 +116,6 @@ def main():
                 progress_text="Execução em andamento..."
                 my_bar = st.progress(0, text=progress_text)
                 qtde_total = 0
-                
-                #fecha container de alguns elementos da tela
-                st.session_state['is_expanded'] = False
                 
                 for i in listaUnica:
                     qtde_total += 1
@@ -201,9 +198,9 @@ def main():
                 my_bar.empty()
                 
                 # coloca botão para possibilitar recarregar a página
-                # botRestart = st.button("Recarregar para nova pesquisa")
-                # if botRestart:
-                #     st.experimental_rerun()
+                botRestart = st.button("Recarregar para nova pesquisa")
+                if botRestart:
+                    st.experimental_rerun()
                     
 if __name__ == '__main__':
 	main()                     
