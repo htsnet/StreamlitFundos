@@ -23,6 +23,8 @@ footer {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 def main():
+    # st.write(st.session_state)
+    
     with st.sidebar:
         st.header('Guia de uso')
         st.write('1 - Cole na caixa ao lado a lista dos identificadores (ticker) de seus fundos imobiliários (ex.: VINO11, HSML11) separados por vírgula, espaço ou enter. Códigos duplicados serão automaticamente removidos.')
@@ -68,7 +70,9 @@ def main():
                     final.append(i.upper())  
         final.sort()
         # guarda conteúdo para próxima execução
+        # st.write(final)
         st.session_state['texto_anterior'] = final
+        # st.write(st.session_state['texto_anterior'])
         return final
 
     def pegaResultado(valor):
@@ -191,6 +195,7 @@ def main():
                     st.markdown(text, unsafe_allow_html=True)
                     st.success('Processamento concluído!')
                     st.balloons()
+                    # st.write(st.session_state)
                 else:
                     st.write('😒 Nenhuma informação foi obtida...')
 
