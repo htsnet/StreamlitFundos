@@ -30,7 +30,7 @@ if 'texto_anterior' in st.session_state:
     #verifica
     for i in st.session_state.texto_anterior:
         text_base = text_base + " " + i
-text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, key='fieldText' max_chars=1000, height=100)
+text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, key='fieldText', max_chars=1000, height=100)
 
 def check_text(text):
     if text:
