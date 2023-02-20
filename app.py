@@ -29,7 +29,7 @@ if 'texto_anterior' in st.session_state:
     text_base = ''
     for i in st.session_state.texto_anterior:
         text_base = text_base + " " + i
-text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, max_chars=1000, height=100)
+text = st.text_area("Cole a lista de códigos de fundo (ticker) na caixa abaixo", value=text_base, key='fieldText' max_chars=1000, height=100)
 
 def check_text(text):
     if text:
@@ -64,6 +64,7 @@ percent = 0.0
 # st.write('Busca das informações')
 botSummary = st.button("Executar a busca das informações")
 if botSummary:
+    ## TODO forçar o enter no text_area para assumir qq informação adicional
     if check_text(text):
         with st.spinner('Tome um café enquanto aguarda o resultado... 😉'):
             
